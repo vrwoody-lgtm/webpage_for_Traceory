@@ -4,42 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>技术支持 | RWoody Labs</title>
-  <meta name="description" content="Get technical support for apps published by RWoody Labs.">
+  <meta name="description" content="获取 RWoody Labs 发布应用的技术支持。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260812">
 </head>
-<body>
+<body data-page="support">
   <main class="shell inner-page">
-    <a class="back-link" href="/index.html">返回首页</a>
+    <div class="topbar">
+      <div class="language-toggle" aria-label="Language switcher">
+        <button type="button" data-language="zh" aria-pressed="false">中文</button>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <a class="back-link" href="/index.html" data-i18n="backLink">返回首页</a>
     <section class="page-header">
-      <p class="eyebrow">Support</p>
-      <h1>技术支持</h1>
-      <p class="lead">如果你在使用 Traceory 进行旅行规划、地图查看、预算记录或回忆整理时遇到问题，可以通过下面的方式联系我们。</p>
+      <p class="eyebrow" data-i18n="eyebrow">技术支持</p>
+      <h1 data-i18n="pageTitle">技术支持</h1>
+      <p class="lead" data-i18n="lead">如果你在使用 Traceory 进行旅行规划、地图查看、预算记录或回忆整理时遇到问题，可以通过下面的方式联系我们。</p>
     </section>
 
     <section class="grid single">
       <article class="card">
-        <h2>联系渠道</h2>
-        <p>支持邮箱：<a href="mailto:rwoody@126.com">rwoody@126.com</a></p>
-        <p>建议在邮件中附上设备型号、系统版本、问题截图、问题发生时间和复现步骤，我们会更快定位问题。</p>
+        <h2 data-i18n="contactTitle">联系渠道</h2>
+        <p class="email-line"><span data-i18n="contactLine">支持邮箱：</span> <a href="mailto:rwoody@126.com">rwoody@126.com</a></p>
+        <p data-i18n="contactBody">建议在邮件中附上设备型号、系统版本、问题截图、问题发生时间和复现步骤，我们会更快定位问题。</p>
       </article>
 
       <article class="card">
-        <h2>响应时间</h2>
-        <p>工作日通常会在 2 个工作日内回复。复杂问题可能需要更长排查时间。</p>
+        <h2 data-i18n="responseTitle">响应时间</h2>
+        <p data-i18n="responseBody">工作日通常会在 2 个工作日内回复。复杂问题可能需要更长排查时间。</p>
       </article>
 
       <article class="card">
-        <h2>常见问题</h2>
-        <p><strong>行程信息没有保存：</strong>请确认编辑完成后已经正常保存，并尽量避免在系统强制关闭应用前退出。</p>
-        <p><strong>地图或地点搜索异常：</strong>请检查网络连接是否稳定，或稍后重新尝试搜索和地图加载。</p>
-        <p><strong>预算或行程内容显示不一致：</strong>建议附上具体旅行条目、日期和截图，便于我们快速复现问题。</p>
-        <p><strong>回忆照片没有正确显示：</strong>请检查照片访问权限是否开启，并确认设备中对应日期确实存在照片素材。</p>
-        <p><strong>iCloud 同步没有生效：</strong>该能力目前仅在 iOS 可用，请确认设备已登录同一 Apple ID、开启 iCloud Drive，并在应用设置中启用同步。</p>
+        <h2 data-i18n="faqTitle">常见问题</h2>
+        <p data-i18n="faq1" data-i18n-mode="html"><strong>行程信息没有保存：</strong>请确认编辑完成后已经正常保存，并尽量避免在系统强制关闭应用前退出。</p>
+        <p data-i18n="faq2" data-i18n-mode="html"><strong>地图或地点搜索异常：</strong>请检查网络连接是否稳定，或稍后重新尝试搜索和地图加载。</p>
+        <p data-i18n="faq3" data-i18n-mode="html"><strong>预算或行程内容显示不一致：</strong>建议附上具体旅行条目、日期和截图，便于我们快速复现问题。</p>
+        <p data-i18n="faq4" data-i18n-mode="html"><strong>回忆照片没有正确显示：</strong>请检查照片访问权限是否开启，并确认设备中对应日期确实存在照片素材。</p>
+        <p data-i18n="faq5" data-i18n-mode="html"><strong>iCloud 同步没有生效：</strong>该能力目前仅在 iOS 可用，请确认设备已登录同一 Apple ID、开启 iCloud Drive，并在应用设置中启用同步。</p>
       </article>
     </section>
   </main>
+  <script src="script.js?v=20260812"></script>
 </body>
 </html>

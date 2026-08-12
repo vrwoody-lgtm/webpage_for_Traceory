@@ -16,6 +16,7 @@ Static website for App Store support, marketing, and privacy policy pages.
 - `marketing.html`: marketing page
 - `privacy.html`: privacy policy page
 - `styles.css`: shared styling for all pages
+- `script.js`: shared bilingual switch logic
 
 ## Deployment
 
@@ -35,5 +36,5 @@ This site is deployed as a static website on a Tencent Cloud Ubuntu server.
 
 ## Notes
 
-- The current privacy policy is written for an app with no account system and no personal data collection.
+- The privacy policy reflects Traceory's local storage, iCloud, AI processing, maps, and online sharing behavior. The app has no account, advertising, or cross-app tracking system, while user-initiated online features may transmit or retain the content required to provide those features.
 - If the app's data usage changes, update `privacy.html` before submitting a new App Store version.

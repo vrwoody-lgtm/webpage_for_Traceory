@@ -3,48 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RWoody Labs | App Support</title>
-  <meta name="description" content="RWoody Labs app support, marketing, and privacy policy pages.">
+  <title>RWoody Labs | App 支持</title>
+  <meta name="description" content="RWoody Labs 应用的支持、营销和隐私政策页面。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260812">
 </head>
-<body>
+<body data-page="index">
   <main class="shell">
+    <div class="topbar">
+      <div class="language-toggle" aria-label="Language switcher">
+        <button type="button" data-language="zh" aria-pressed="false">中文</button>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
     <section class="hero">
-      <p class="eyebrow">Traceory</p>
-      <h1>旅行规划与回忆整理支持中心</h1>
-      <p class="lead">
-        这里提供 Traceory 的技术支持、产品介绍和隐私政策页面。
-        你可以在这里查看常见问题、了解产品能力，或获取适用于 App Store Connect 的
-        <strong>Support URL</strong>、<strong>Marketing URL</strong> 和
-        <strong>Privacy Policy URL</strong>。
-      </p>
+      <p class="eyebrow" data-i18n="eyebrow">Traceory</p>
+      <h1 data-i18n="heroTitle">旅行规划与回忆整理支持中心</h1>
+      <p class="lead" data-i18n="heroLead">这里提供 Traceory 的技术支持、产品介绍和隐私政策页面。你可以在这里查看常见问题、了解产品能力，或获取适用于 App Store Connect 的 Support URL、Marketing URL 和 Privacy Policy URL。</p>
       <div class="hero-actions">
-        <a class="button primary" href="/support.html">技术支持</a>
-        <a class="button" href="/marketing.html">营销页面</a>
-        <a class="button" href="/privacy.html">隐私政策</a>
+        <a class="button primary" href="/support.html" data-i18n="supportButton">技术支持</a>
+        <a class="button" href="/marketing.html" data-i18n="marketingButton">营销页面</a>
+        <a class="button" href="/privacy.html" data-i18n="privacyButton">隐私政策</a>
       </div>
     </section>
 
     <section class="grid">
       <article class="card">
-        <h2>技术支持</h2>
-        <p>查看使用 Traceory 时的常见问题、联系邮箱和问题反馈方式。</p>
-        <a href="/support.html">查看支持页面</a>
+        <h2 data-i18n="supportCardTitle">技术支持</h2>
+        <p data-i18n="supportCardBody">查看使用 Traceory 时的常见问题、联系邮箱和问题反馈方式。</p>
+        <a href="/support.html" data-i18n="supportCardLink">查看支持页面</a>
       </article>
       <article class="card">
-        <h2>产品介绍</h2>
-        <p>了解 Traceory 的旅行规划、地图、预算和回忆整理能力。</p>
-        <a href="/marketing.html">查看营销页面</a>
+        <h2 data-i18n="marketingCardTitle">产品介绍</h2>
+        <p data-i18n="marketingCardBody">了解 Traceory 的旅行规划、地图、预算和回忆整理能力。</p>
+        <a href="/marketing.html" data-i18n="marketingCardLink">查看营销页面</a>
       </article>
       <article class="card">
-        <h2>隐私政策</h2>
-        <p>查看当前关于无账号系统和不主动收集个人隐私数据的隐私说明。</p>
-        <a href="/privacy.html">查看隐私政策</a>
+        <h2 data-i18n="privacyCardTitle">隐私政策</h2>
+        <p data-i18n="privacyCardBody">了解 Traceory 如何处理本地数据、iCloud、AI 与在线分享内容，以及你可以使用的控制方式。</p>
+        <a href="/privacy.html" data-i18n="privacyCardLink">查看隐私政策</a>
       </article>
     </section>
   </main>
+  <script src="script.js?v=20260812"></script>
 </body>
 </html>

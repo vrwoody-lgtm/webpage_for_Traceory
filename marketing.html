@@ -4,43 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>产品介绍 | RWoody Labs</title>
-  <meta name="description" content="Product marketing page for apps by RWoody Labs.">
+  <meta name="description" content="RWoody Labs 应用的产品介绍页面。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260812">
 </head>
-<body>
+<body data-page="marketing">
   <main class="shell inner-page">
-    <a class="back-link" href="/index.html">返回首页</a>
+    <div class="topbar">
+      <div class="language-toggle" aria-label="Language switcher">
+        <button type="button" data-language="zh" aria-pressed="false">中文</button>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <a class="back-link" href="/index.html" data-i18n="backLink">返回首页</a>
     <section class="page-header">
-      <p class="eyebrow">Marketing</p>
-      <h1>Traceory</h1>
-      <p class="lead">Traceory 是一款旅行规划应用，帮助你把行程、预算、地点、地图和回忆照片整理到同一个轻量但完整的旅行时间线里。</p>
+      <p class="eyebrow" data-i18n="eyebrow">产品介绍</p>
+      <h1 data-i18n="pageTitle">Traceory</h1>
+      <p class="lead" data-i18n="lead">Traceory 是一款旅行规划应用，帮助你把行程、预算、地点、地图和回忆照片整理到同一个轻量但完整的旅行时间线里。</p>
     </section>
 
     <section class="grid">
       <article class="card">
-        <h2>一站式旅行整理</h2>
-        <p>从创建旅行、安排每日计划，到记录住宿、交通、游玩项目和备注，Traceory 让整个行程规划过程更清晰、更容易回看。</p>
+        <h2 data-i18n="card1Title">一站式旅行整理</h2>
+        <p data-i18n="card1Body">从创建旅行、安排每日计划，到记录住宿、交通、游玩项目和备注，Traceory 让整个行程规划过程更清晰、更容易回看。</p>
       </article>
       <article class="card">
-        <h2>地图与地点能力</h2>
-        <p>应用支持地点搜索、路线概览、记忆地图、地图缩放与地点聚合，帮助你把旅行中的地点信息直接放进地图语境里理解和管理。</p>
+        <h2 data-i18n="card2Title">地图与地点能力</h2>
+        <p data-i18n="card2Body">应用支持地点搜索、路线概览、记忆地图、地图缩放与地点聚合，帮助你把旅行中的地点信息直接放进地图语境里理解和管理。</p>
       </article>
       <article class="card">
-        <h2>预算与回忆并重</h2>
-        <p>除了预算与实际花费汇总，Traceory 还支持按旅行日期整理回忆照片，让一次旅行不只是计划完成，也能被自然保存下来。</p>
+        <h2 data-i18n="card3Title">预算与回忆并重</h2>
+        <p data-i18n="card3Body">除了预算与实际花费汇总，Traceory 还支持按旅行日期整理回忆照片，让一次旅行不只是计划完成，也能被自然保存下来。</p>
       </article>
     </section>
 
     <section class="feature-band">
       <div>
-        <p class="eyebrow">Why This App</p>
-        <h2>从规划，到出发，再到回忆</h2>
+        <p class="eyebrow" data-i18n="bandEyebrow">为什么选择它</p>
+        <h2 data-i18n="bandTitle">从规划，到出发，再到回忆</h2>
       </div>
-      <p>Traceory 当前支持行程管理、预算统计、地点搜索、地图展示、回忆照片整理、多语言设置，以及 iOS 端的 iCloud 实时同步能力。它适合希望把“旅行前规划”和“旅行后整理”放在同一个产品里的用户。</p>
+      <p data-i18n="bandBody">Traceory 当前支持行程管理、预算统计、地点搜索、地图展示、回忆照片整理、多语言设置，以及 iOS 端的 iCloud 实时同步能力。它适合希望把“旅行前规划”和“旅行后整理”放在同一个产品里的用户。</p>
     </section>
   </main>
+  <script src="script.js?v=20260812"></script>
 </body>
 </html>

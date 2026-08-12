@@ -28,6 +28,10 @@ a {
   color: var(--accent-dark);
 }
 
+button {
+  font: inherit;
+}
+
 .shell {
   width: min(1100px, calc(100% - 32px));
   margin: 0 auto;
@@ -89,6 +93,39 @@ a {
   margin-top: 28px;
 }
 
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+}
+
+.language-toggle {
+  display: inline-flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 999px;
+  border: 1px solid var(--surface-border);
+  background: rgba(255, 253, 249, 0.82);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+}
+
+.language-toggle button {
+  min-width: 64px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--accent-dark);
+  background: transparent;
+  cursor: pointer;
+}
+
+.language-toggle button.active {
+  background: var(--accent);
+  color: #fffaf3;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -129,6 +166,13 @@ a {
   color: var(--muted);
 }
 
+.email-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: baseline;
+}
+
 .back-link {
   display: inline-block;
   margin-bottom: 18px;
@@ -157,10 +201,25 @@ a {
   font-size: 1.3rem;
 }
 
+.prose ul {
+  margin: 12px 0 0;
+  padding-left: 1.25rem;
+  color: var(--muted);
+}
+
+.prose li {
+  line-height: 1.8;
+  margin-top: 6px;
+}
+
 @media (max-width: 900px) {
   .grid,
   .feature-band {
     grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    justify-content: center;
   }
 
   .hero,
