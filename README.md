@@ -40,7 +40,8 @@ The workflow:
 2. Uploads the package to the server over SSH.
 3. Replaces only the Traceory files at the top level of `/var/www/support-site`.
    Other sites in that directory, including `chinese-chess`, are preserved.
-4. Verifies every production page and shared asset over HTTPS.
+4. Verifies every production page and shared asset through the server's HTTPS
+   virtual host.
 
 Configure these repository secrets under
 **Settings → Secrets and variables → Actions** before the first run:

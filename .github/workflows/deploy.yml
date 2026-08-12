@@ -20,7 +20,6 @@ concurrency:
 
 env:
   DEPLOY_DIR: /var/www/support-site
-  SITE_URL: https://support.rwoodylabs.org
 
 jobs:
   deploy:
@@ -152,9 +151,26 @@ jobs:
 
       - name: Verify production pages
         shell: bash
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
           set -euo pipefail
 
+          ssh_options=(
+            -i "$RUNNER_TEMP/deploy_key"
+            -o BatchMode=yes
+            -o IdentitiesOnly=yes
+            -o StrictHostKeyChecking=yes
+            -o "UserKnownHostsFile=$RUNNER_TEMP/known_hosts"
+          )
+
+          ssh "${ssh_options[@]}" "${SERVER_USER}@${SERVER_HOST}" \
+            "bash -s -- '$SERVER_HOST'" <<'REMOTE'
+          set -euo pipefail
+
+          server_host="$1"
+          site_url="https://support.rwoodylabs.org"
           curl_options=(
             --fail
             --silent
@@ -164,17 +180,17 @@ jobs:
             --retry-delay 2
             --retry-all-errors
             --max-time 20
-            -H "Cache-Control: no-cache"
+            --resolve "support.rwoodylabs.org:443:${server_host}"
           )
-          cache_bust="deploy=${GITHUB_SHA}"
 
-          curl "${curl_options[@]}" "$SITE_URL/?$cache_bust" \
+          curl "${curl_options[@]}" "$site_url/" \
             | grep -F 'data-page="index"' > /dev/null
-          curl "${curl_options[@]}" "$SITE_URL/support.html?$cache_bust" \
+          curl "${curl_options[@]}" "$site_url/support.html" \
             | grep -F 'data-page="support"' > /dev/null
-          curl "${curl_options[@]}" "$SITE_URL/marketing.html?$cache_bust" \
+          curl "${curl_options[@]}" "$site_url/marketing.html" \
             | grep -F 'data-page="marketing"' > /dev/null
-          curl "${curl_options[@]}" "$SITE_URL/privacy.html?$cache_bust" \
+          curl "${curl_options[@]}" "$site_url/privacy.html" \
             | grep -F 'data-page="privacy"' > /dev/null
-          curl "${curl_options[@]}" "$SITE_URL/styles.css?$cache_bust" > /dev/null
-          curl "${curl_options[@]}" "$SITE_URL/script.js?$cache_bust" > /dev/null
+          curl "${curl_options[@]}" "$site_url/styles.css" > /dev/null
+          curl "${curl_options[@]}" "$site_url/script.js" > /dev/null
+          REMOTE
