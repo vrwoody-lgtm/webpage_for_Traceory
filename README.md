@@ -28,11 +28,37 @@ This site is deployed as a static website on a Tencent Cloud Ubuntu server.
 - Web server: `nginx`
 - HTTPS: Let's Encrypt via `certbot`
 
-## Update Workflow
+## GitHub Actions Deployment
 
-1. Edit the local files in this repository.
-2. Upload the updated files to the server web root.
-3. Verify the live pages over HTTPS.
+The workflow at `.github/workflows/deploy.yml` automatically deploys the site
+after a relevant file is pushed to `main`. It can also be started manually from
+the repository's **Actions** tab.
+
+The workflow:
+
+1. Validates and packages the six public website files.
+2. Uploads the package to the server over SSH.
+3. Replaces only the Traceory files at the top level of `/var/www/support-site`.
+   Other sites in that directory, including `chinese-chess`, are preserved.
+4. Verifies every production page and shared asset over HTTPS.
+
+Configure these repository secrets under
+**Settings → Secrets and variables → Actions** before the first run:
+
+- `SERVER_HOST`: `43.165.178.158`
+- `SERVER_USER`: `ubuntu`
+- `SERVER_SSH_KEY`: the private key for the server deployment user
+- `SERVER_SSH_KNOWN_HOSTS`: the trusted `known_hosts` entry for the server
+
+The server directory must already exist and be writable by the deployment user:
+
+```bash
+sudo mkdir -p /var/www/support-site
+sudo chown ubuntu:ubuntu /var/www/support-site
+```
+
+Pushing only documentation or unrelated repository files does not trigger a
+production deployment.
 
 ## Notes
 

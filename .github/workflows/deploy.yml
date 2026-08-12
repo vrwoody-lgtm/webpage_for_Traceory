@@ -1,0 +1,180 @@
+name: Deploy Traceory website
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "*.html"
+      - "styles.css"
+      - "script.js"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: traceory-website-production
+  cancel-in-progress: false
+
+env:
+  DEPLOY_DIR: /var/www/support-site
+  SITE_URL: https://support.rwoodylabs.org
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://support.rwoodylabs.org
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Validate static site
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_files=(
+            index.html
+            marketing.html
+            privacy.html
+            support.html
+            styles.css
+            script.js
+          )
+
+          for file in "${required_files[@]}"; do
+            test -s "$file"
+          done
+
+          node --check script.js
+
+      - name: Package static site
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p dist
+          cp \
+            index.html \
+            marketing.html \
+            privacy.html \
+            support.html \
+            styles.css \
+            script.js \
+            dist/
+          tar -czf "$RUNNER_TEMP/traceory-site-${GITHUB_SHA}.tar.gz" -C dist .
+
+      - name: Configure SSH
+        shell: bash
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SERVER_SSH_KNOWN_HOSTS: ${{ secrets.SERVER_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+
+          : "${SERVER_HOST:?Repository secret SERVER_HOST is required}"
+          : "${SERVER_USER:?Repository secret SERVER_USER is required}"
+          : "${SERVER_SSH_KEY:?Repository secret SERVER_SSH_KEY is required}"
+          : "${SERVER_SSH_KNOWN_HOSTS:?Repository secret SERVER_SSH_KNOWN_HOSTS is required}"
+
+          printf '%s\n' "$SERVER_SSH_KEY" > "$RUNNER_TEMP/deploy_key"
+          printf '%s\n' "$SERVER_SSH_KNOWN_HOSTS" > "$RUNNER_TEMP/known_hosts"
+          chmod 600 "$RUNNER_TEMP/deploy_key" "$RUNNER_TEMP/known_hosts"
+
+      - name: Upload and publish
+        shell: bash
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          set -euo pipefail
+
+          ssh_options=(
+            -i "$RUNNER_TEMP/deploy_key"
+            -o BatchMode=yes
+            -o IdentitiesOnly=yes
+            -o StrictHostKeyChecking=yes
+            -o "UserKnownHostsFile=$RUNNER_TEMP/known_hosts"
+          )
+          archive_name="traceory-site-${GITHUB_SHA}.tar.gz"
+
+          scp "${ssh_options[@]}" \
+            "$RUNNER_TEMP/$archive_name" \
+            "${SERVER_USER}@${SERVER_HOST}:/tmp/$archive_name"
+
+          ssh "${ssh_options[@]}" "${SERVER_USER}@${SERVER_HOST}" \
+            "bash -s -- '$DEPLOY_DIR' '$GITHUB_SHA'" <<'REMOTE'
+          set -euo pipefail
+
+          deploy_dir="$1"
+          release_id="$2"
+          archive="/tmp/traceory-site-${release_id}.tar.gz"
+          managed_files=(
+            index.html
+            marketing.html
+            privacy.html
+            support.html
+            styles.css
+            script.js
+          )
+
+          test -d "$deploy_dir"
+          test -w "$deploy_dir"
+          test -s "$archive"
+
+          staging_dir="$(mktemp -d "${deploy_dir}/.traceory-staging.XXXXXX")"
+          cleanup() {
+            rm -rf -- "$staging_dir"
+            rm -f -- "$archive"
+          }
+          trap cleanup EXIT
+
+          tar -xzf "$archive" -C "$staging_dir"
+
+          for file in "${managed_files[@]}"; do
+            test -s "$staging_dir/$file"
+            chmod 0644 "$staging_dir/$file"
+          done
+
+          for file in "${managed_files[@]}"; do
+            mv -f -- "$staging_dir/$file" "$deploy_dir/$file"
+          done
+          REMOTE
+
+      - name: Verify production pages
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          curl_options=(
+            --fail
+            --silent
+            --show-error
+            --location
+            --retry 5
+            --retry-delay 2
+            --retry-all-errors
+            --max-time 20
+            -H "Cache-Control: no-cache"
+          )
+          cache_bust="deploy=${GITHUB_SHA}"
+
+          curl "${curl_options[@]}" "$SITE_URL/?$cache_bust" \
+            | grep -F 'data-page="index"' > /dev/null
+          curl "${curl_options[@]}" "$SITE_URL/support.html?$cache_bust" \
+            | grep -F 'data-page="support"' > /dev/null
+          curl "${curl_options[@]}" "$SITE_URL/marketing.html?$cache_bust" \
+            | grep -F 'data-page="marketing"' > /dev/null
+          curl "${curl_options[@]}" "$SITE_URL/privacy.html?$cache_bust" \
+            | grep -F 'data-page="privacy"' > /dev/null
+          curl "${curl_options[@]}" "$SITE_URL/styles.css?$cache_bust" > /dev/null
+          curl "${curl_options[@]}" "$SITE_URL/script.js?$cache_bust" > /dev/null
